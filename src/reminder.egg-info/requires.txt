@@ -1,0 +1,1 @@
+desktop-notifier>=6.2

@@ -5,6 +5,7 @@ description = "Personal desktop reminders for macOS"
 requires-python = ">=3.12"
 dependencies = [
     "desktop-notifier>=6.2",
+    "fastapi[standard]>=0.162.0",
 ]
 
 [build-system]

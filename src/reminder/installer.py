@@ -3,7 +3,7 @@ import sys
 import plistlib
 import subprocess
 from pathlib import Path
-from reminder.services.storage import Storage
+from reminder.services.database import Database
 
 LABEL = "com.daily.reminder"
 PLIST = Path.home() / "Library/LaunchAgents" / f"{LABEL}.plist"
@@ -34,7 +34,7 @@ def uninstall():
     PLIST.unlink(missing_ok=True)
 
 def migrate():
-    migrations = Storage().run_migrations()
+    migrations = Database().run_migrations()
     if migrations > 0:
         print (f"{migrations} migration(s) was executed sucessfuly.")
     else:

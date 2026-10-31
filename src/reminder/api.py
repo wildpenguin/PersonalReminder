@@ -1,7 +1,26 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-app = FastAPI()
+from reminder.models.schema import Reminder, ReminderCreate
+from reminder.repositories.reminders import ReminderRepository
+from reminder.services.database import Database
 
-@app.get("/reminders/{id}")
-async def get_reminders(id: int):
-    return {"message": f"Get reminders - {id}"}
+db = Database()
+repo = ReminderRepository(db)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    db.run_migrations()
+    yield
+    db.close()
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get("/reminders")
+async def list_reminders() -> list[Reminder]:
+    return repo.get_reminders()
+
+@app.post("/reminders", status_code=201)
+async def create(reminder: ReminderCreate) -> Reminder:
+    return repo.add_reminder(reminder)

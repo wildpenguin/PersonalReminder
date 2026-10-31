@@ -2,10 +2,15 @@ README.md
 pyproject.toml
 src/reminder/__init__.py
 src/reminder/api.py
+src/reminder/installer.py
 src/reminder/notifier.py
 src/reminder.egg-info/PKG-INFO
 src/reminder.egg-info/SOURCES.txt
 src/reminder.egg-info/dependency_links.txt
 src/reminder.egg-info/requires.txt
 src/reminder.egg-info/top_level.txt
+src/reminder/models/schema.py
+src/reminder/repositories/reminders.py
+src/reminder/services/database.py
 src/reminder/services/notification.py
+tests/test_reminders_api.py

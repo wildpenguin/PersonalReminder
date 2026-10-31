@@ -20,10 +20,11 @@ MIGRATIONS = [
     """,
 ]
 
-class Storage:
+class Database:
     def __init__(self, db_path: Path | str = DB_PATH):
-        self.db = sqlite3.connect(db_path, autocommit=False)
+        self.db = sqlite3.connect(db_path, autocommit=True, check_same_thread=False)
         self.db.execute("PRAGMA foreign_keys = ON")
+        self.db.row_factory = sqlite3.Row
 
     def run_migrations(self) -> int:
         version = self.db.execute("PRAGMA user_version").fetchone()[0]
@@ -37,3 +38,5 @@ class Storage:
     def close(self):
         self.db.close()
 
+    def execute(self, query: str, params=()) -> sqlite3.Cursor:
+        return self.db.execute(query, params)

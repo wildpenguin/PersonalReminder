@@ -7,17 +7,17 @@ from reminder.services.database import Database
 
 LABEL = "com.daily.reminder"
 PLIST = Path.home() / "Library/LaunchAgents" / f"{LABEL}.plist"
-SCRIPT = Path(__file__).resolve().parent / "notifier.py"
 
 def install():
-    if not SCRIPT.exists():
-        sys.exit(f"Not found: {SCRIPT}")
+    if sys.prefix == sys.base_prefix:
+        sys.exit("Run this from the project's venv: uv run python -m reminder.installer --install")
 
     config = {
         "Label": LABEL,
-        "ProgramArguments": [sys.executable, str(SCRIPT)],
+        "ProgramArguments": [sys.executable, "-m", "reminder.notifier"],
         "StartInterval": 300,
         "RunAtLoad": True,
+        "StandardOutPath": str(Path.home() / "Library/Logs/reminder.out"),
         "StandardErrorPath": str(Path.home() / "Library/Logs/reminder.err"),
     }
 

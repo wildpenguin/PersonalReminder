@@ -8,8 +8,6 @@ async def main():
     db = Database()
     reminderRepo = ReminderRepository(db)
     reminders = reminderRepo.get_reminders_to_show()
-    print (reminders)
-
     notifier = ScreenNotification()
 
     for reminder in reminders:

@@ -17,6 +17,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.frontend("/", directory="frontend/dist")
+
 @app.get("/reminders")
 async def list_reminders() -> list[Reminder]:
     return repo.get_reminders()

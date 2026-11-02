@@ -11,3 +11,8 @@ class ReminderCreate(BaseModel):
 
 class Reminder(ReminderCreate):
     id: int
+
+class ReminderLog(BaseModel):
+    id: int
+    reminder_id: int
+    date: AwareDatetime
